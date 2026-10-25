@@ -1,0 +1,124 @@
+BHUSAL FAMILY WEBSITE — EDITION 3
+बृहत् भुसाल वंशावली | हाम्रो वंश, हाम्रो पहिचान
+25 October 2026
+
+YOUR EXISTING ADDRESS
+https://bhusal-family.github.io/
+Continue using the same repository and GitHub Pages settings. No domain purchase is needed.
+
+UPDATE THE WEBSITE
+1. Download Bhusal-Family-Website-v3.zip and double-click to extract it.
+2. Open your existing bhusal-family.github.io repository on GitHub.
+3. In the Code tab, stay in the folder where your current index.html sits.
+4. Choose Add file > Upload files. Drag in the extracted CONTENTS, not the ZIP
+   and not a surrounding folder. Replace the existing files with the same names.
+5. The required website files are:
+   index.html
+   styles.css
+   app.js
+   data.js
+   content.js       (new: news, history topics, shared photo album)
+   community.js     (new: request and news interactions)
+   DESIGN-RESEARCH.html
+   UPLOAD-GUIDE.txt
+   photos/README.txt
+   .nojekyll        (hidden marker, explained below)
+6. Keep any photographs you already added to the photos folder. This package
+   does not replace or delete those images. Preserve their existing paths.
+7. Enter a message such as “Update family website to version 3” and commit.
+8. Check the repository's Actions tab for the Pages deployment to finish.
+9. Open https://bhusal-family.github.io/ and reload. On a laptop, a hard refresh
+   may be needed (Mac: Command+Shift+R; Windows: Ctrl+Shift+R).
+10. Check Musu's two branches, the list view, a profile's tabs, news and requests
+    on your phone as well as your laptop.
+
+The index.html file must replace the existing index.html at the published root.
+Uploading a containing folder would leave the old website at your usual address.
+Do not upload the Excel register or Tikaram's original attachment as part of this
+website update. Keep your editable master separately.
+
+IF YOU CANNOT SEE .nojekyll
+The ZIP includes it. Finder hides names beginning with a dot. Press
+Command+Shift+Period to show hidden files. Alternatively, in GitHub use Add file
+> Create new file, name it .nojekyll, leave it empty and commit. This marker is
+useful for publishing plain static files. The ordinary HTML/CSS/JS files here do
+not depend on underscore-prefixed folders, so a hidden marker should not prevent
+you from uploading and viewing the demonstration.
+
+WHAT CHANGED
+- Slim green navigation on laptops; compact bottom navigation on phones.
+- Full-width tree with top-down and sideways directions, generation controls,
+  search, zoom, branch focus and a compact expandable list.
+- On-demand profiles: Family, Details/photo, Sources. No fixed photo sidebar.
+- Latest Excel data: 542 records, including 363 lineage entries and 179 spouses.
+  This total includes unnamed placeholders; it is not a count of verified names.
+- Musu > Hari Prasad and Damodar, with all recorded branches from the main sheet.
+- News/updates, proposed history and culture topics, and a shared-photo area.
+- Per-person requests and a general request section.
+- Phone numbers excluded from website data, excerpts and the new register.
+
+HOW FAMILY REQUESTS WORK
+Contact: krish.bhula@gmail.com
+A relative clicks the pen on a person's card or opens अनुरोध. They select a
+request type, give the details and evidence, and prepare the request. The page
+then opens a prepared email; the relative must review and send it. If no email
+app opens, they can copy the text into Gmail or download it and attach it.
+The website does not claim an email was sent and does not maintain an inbox.
+No request becomes a public family-tree change without your review.
+
+UPDATING THE EDITABLE REGISTER
+Use the separate Bhusal-Family-Register-v3.xlsx. Its Guide sheet explains the
+People and Sources sheets. Keep existing person IDs unchanged. Correct names,
+life status and relationships, and add evidence in Family corrections.
+Unknown does not mean Living. Deceased adds स्व. to the calculated display name.
+Dates in BS and AD have separate columns. No dates have been invented.
+800 person rows are prepared, with formulas and validation. New generations
+beyond 10 are supported. Extend the prepared table and formula ranges if needed.
+Return the edited workbook when you want the website data regenerated. Editing
+Excel by itself does not update GitHub Pages.
+
+NAME CORRECTIONS AND OPEN QUESTIONS
+The latest Excel supersedes the earlier photograph transcription. Existing IDs
+were retained where possible so links and photos remain connected. An ID may
+therefore contain an old spelling even when the displayed name is corrected.
+142 records carry a clarification flag. Some refer to unnamed spouses rather
+than an uncertain named ancestor. Check their Sources links before editing.
+Combined entries “सुदन मोनालिसा” (Q180) and “भिम रीता” (O185) remain flagged.
+Kaushila's note mentions a grandson Gurudev, but does not identify the intervening
+parent. The previous photo-only Reshamlal reading is superseded, not asserted as
+a direct child. The first workbook sheet supplies an earlier ancestor note; the
+main interactive tree still starts with Musu.
+
+ADDING SHARED PHOTOS
+1. Put an approved JPG, PNG or WebP in photos, e.g. musu.jpg.
+2. In data.js, find the exact person by their stable id, e.g. "id": "musu".
+3. Change that person's "photo": "" to "photo": "./photos/musu.jpg".
+4. Upload both data.js and the photo to the same repository.
+Names must match exactly, including upper/lowercase. Use simple filenames.
+“Add photo” inside a profile only previews a photo in that visitor's browser.
+It does not upload a picture or make it visible to other family members.
+
+NEWS, TOPICS AND THE ALBUM
+content.js holds the updates, topics and photographs arrays. Edit text there
+and upload content.js again. Preserve commas and quotation marks; use plain text.
+For an update, supply its date (YYYY-MM-DD), category, title, summary, paragraphs
+and optional personIds/sourceId. Do not describe unverified history as fact.
+For an album photo, follow the commented example in content.js and upload its
+image to photos. The proposed Sheet3 topics are not finished articles.
+
+PRIVACY
+Do not add phone numbers to notes, stories, photographs or data files. The public
+data download and source excerpts are also readable by visitors. Tikaram's
+original attachment and the original paper photograph can contain private numbers;
+keep them outside the public repository. If you previously uploaded either,
+check the repository separately; replacing these website files does not remove
+older uploaded files or Git history.
+
+LOCAL PREVIEW
+Open index.html after extracting the ZIP. The tree works without a build or an
+internet connection. Clipboard and local-photo storage can depend on browser
+settings when opened as a local file. GitHub Pages provides the normal web version.
+
+RESEARCH
+Open DESIGN-RESEARCH.html or use Research & design notes under परिचय. It contains
+the official sources, comparison, implemented choices and practical limitations.
