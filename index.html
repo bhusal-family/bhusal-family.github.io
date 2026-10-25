@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bhusal Family · भुसाल वंशावली</title>
+  <meta name="description" content="Explore the full Bhusal family record from Musu through ten generations. All branches on the supplied paper are represented provisionally.">
+  <meta name="theme-color" content="#203d35">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="#tree" data-view="tree" aria-label="Bhusal family home"><span class="brandmark" aria-hidden="true">भु</span><span>भुसाल वंशावली<small>BHUSAL FAMILY ARCHIVE</small></span></a>
+    <div class="sidebar-rule"></div>
+    <p class="nav-caption">OUR SHARED ROOTS</p>
+    <nav aria-label="Main navigation">
+      <button class="nav-item active" data-view="tree"><span data-icon="tree"></span>Family tree</button>
+      <button class="nav-item" data-view="directory"><span data-icon="people"></span>Family directory</button>
+      <button class="nav-item" data-view="guide"><span data-icon="book"></span>Reading the sheet</button>
+    </nav>
+    <div class="sidebar-note"><span class="little-flower">✳</span><p>Our stories grow<br>from the same roots.</p><span>हाम्रो परिवार, हाम्रो पहिचान</span></div>
+    <div class="sidebar-bottom"><span class="status-dot"></span> Interactive demonstration<small>Full page · awaiting family review</small></div>
+  </aside>
+  <main>
+    <header class="topbar"><div class="breadcrumb">The family archive <span>/</span> <b id="view-label">Family tree</b></div><button class="subtle source-link" data-view="guide"><span data-icon="book"></span> About this record</button></header>
+    <section class="page-heading"><div><p class="eyebrow">CONNECTED THROUGH GENERATIONS</p><h1 id="page-title">From Musu, through every generation.</h1><p id="page-description">मुसु → हरि प्रसाद. Explore every branch recorded on your family sheet.</p></div><div class="edition"><span>वंशावली</span><small>A living family archive</small></div></section>
+    <div class="notice"><span class="notice-mark">i</span><p><strong>All branches from your family sheet.</strong> 130 records include spouses and unclear/unnamed entries. Confirm provisional details in the Excel register.</p><span class="draft-tag">DEMONSTRATION</span></div>
+    <section class="workspace-toolbar"><div class="view-switch" aria-label="View"><button class="selected" data-view="tree"><span data-icon="tree"></span>Tree</button><button data-view="directory"><span data-icon="grid"></span>Directory</button></div><div class="search-area"><span data-icon="search"></span><input id="search" type="search" placeholder="Find a family member…" aria-label="Find a family member" autocomplete="off"><div id="search-results" class="search-results" hidden></div></div><button class="button export" id="export-data"><span data-icon="download"></span><span>Family data</span></button></section>
+    <section id="tree-view" class="view-panel">
+      <div class="tree-layout">
+        <section class="tree-shell" aria-label="Interactive family tree">
+          <div class="tree-top"><div><span class="small-label">FAMILY BRANCH</span><h2 id="branch-title">मुसुबाट सुरु भएको वंश</h2></div><button id="reset-tree" class="subtle"><span data-icon="reset"></span>Reset</button></div>
+          <div class="branch-picker"><label for="branch-select">Choose a branch</label><select id="branch-select" aria-label="Choose a family branch"></select></div><div id="ancestor-path" class="ancestor-path" aria-label="Ancestry back to Musu"></div><div class="tree-guide"><span><i class="legend-dot male"></i>Son / male</span><span><i class="legend-dot female"></i>Daughter / female</span><span class="connector-legend">— Family connection</span></div>
+          <div id="tree-viewport" class="tree-viewport" tabindex="0" aria-label="Family branches. Scroll to explore more generations."><div id="tree-sizer"><div id="tree-canvas"></div></div></div>
+          <div class="tree-bottom"><span class="tree-hint">Select a person to open their profile.<br><b>Use + to unfold the next generation.</b></span><div class="zoom-tools"><button id="zoom-out" aria-label="Zoom out">−</button><span id="zoom-value">100%</span><button id="zoom-in" aria-label="Zoom in">+</button><button id="fit-tree" aria-label="Fit tree to view" title="Fit tree to view"><span data-icon="fit"></span></button></div></div>
+          <div class="tree-actions"><button id="expand-all" class="subtle">Expand this branch <span aria-hidden="true">↗</span></button><span id="tree-count"></span></div>
+        </section>
+        <aside id="profile" class="profile-panel" aria-label="Person profile"></aside>
+      </div>
+    </section>
+    <section id="directory-view" class="view-panel" hidden><div class="directory-heading"><div><p class="small-label">ALL FAMILY RECORDS</p><h2>Each person has a place. <small id="directory-count"></small></h2></div><select id="directory-filter" aria-label="Filter family directory"><option value="all">Everyone</option><option value="lineage">Lineage records</option><option value="partners">Spouses</option><option value="deceased">Marked deceased</option><option value="unclear">Needs clarification</option></select></div><div id="directory-grid" class="directory-grid"></div><p id="directory-empty" hidden>No matching names. Try a different spelling.</p></section>
+    <section id="guide-view" class="view-panel" hidden>
+      <div class="guide-grid"><article class="guide-card"><p class="eyebrow">THE FAMILY RECORD</p><h2>Beginning with मुसु</h2><p>The genealogy begins in the narrow columns on the left: <strong>मुसु → हरि प्रसाद → चक्रपाणी → रामेश्वर → प्रजापति</strong>. The user confirmed Musu and Hari Prasad as the starting link.</p><p>The later branches include Kamalapati and Maheshwar, then Motilal, Ratnakhar, Dhanapati, Dandapani and Khim Prasad. The small early branches, missing-person entries and unnamed daughters are also represented.</p><div class="generation-example"><span>1<small>Musu</small></span><b>→</b><span>2<small>Hari Prasad</small></span><b>…</b><span>7<small>Column A</small></span><b>→</b><span>10<small>Column D</small></span></div><p>Generation numbers follow the paper’s layout. Original column labels च, ङ, घ, ग, ख, क, A, B, C and D remain in the individual records.</p><dl class="reading-key"><div><dt>१, २, ३</dt><dd>Appear to number males within a sibling group.</dd></div><div><dt>i, ii, iii</dt><dd>Appear to number females within a sibling group. Daughters and their recorded children remain connected.</dd></div><div><dt>+</dt><dd>Connects spouses. Multiple spouse entries are kept separate.</dd></div><div><dt>स्व.</dt><dd>Prefix for a person marked Deceased. Other people remain Unknown until the family supplies their status.</dd></div><div><dt>पिता / विवाह</dt><dd>पिता in a spouse’s note is not automatically the lineage person’s father. विवाह introduces marriage details.</dd></div></dl><p class="fine-print">The markers do not establish combined sibling birth order. A blank descendant cell does not prove someone has no children. Dashed lines indicate an entry needing clarification.</p></article>
+      <article class="guide-card guide-secondary"><span class="little-flower">✳</span><h2>Every branch, with room to correct.</h2><p>This revision contains <strong>130 records</strong>: 79 family-side entries and 51 spouses, including unnamed or unclear placeholders. It covers all visible branches on <strong>Bashawoli.jpg</strong>.</p><h3>What still needs review</h3><p>Several tiny names in the top rows are unreadable. Their places are preserved with clear labels. The two Vasudev entries and people with repeated names have different IDs. Repeated ancestor blocks are represented once.</p><p>Umapati in the Dhanapati branch has two spouse entries. His children’s mother links remain blank until the family confirms them.</p><h3>Living and deceased members</h3><p>Only Balakrishna in the Prajapati branch is prefilled as deceased because the paper says भारतमा निधन. A missing person is not assumed deceased. The other Balakrishna is a separate person.</p><h3>Your editable Excel register</h3><p>Edit names, status, parent IDs and notes in <strong>People</strong>. Update marriages in <strong>Couples</strong>. The workbook also includes the source transcription and original photograph. Permanent IDs keep the website and workbook connected.</p><p class="fine-print">Return the revised workbook when you want a new website release. This static website does not automatically read changes from Excel.</p><h3>Family photographs</h3><p>“Add photo” previews a picture in this browser. For photos visible to everyone, upload them to the photos folder and set each person’s photo path as described in the upload guide.</p></article></div>
+    </section>
+    <footer><span>भुसाल परिवार <span class="footer-dot">·</span> Keeping our connections alive.</span><span id="archive-stats"></span></footer>
+  </main>
+  <div id="mobile-profile-backdrop" class="profile-backdrop" hidden></div><div id="toast" role="status" class="toast" hidden></div><input id="photo-input" type="file" accept="image/jpeg,image/png,image/webp" hidden>
+  <script src="./data.js"></script><script src="./app.js"></script>
+</body></html>
