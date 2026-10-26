@@ -1,124 +1,102 @@
-BHUSAL FAMILY WEBSITE — EDITION 3
-बृहत् भुसाल वंशावली | हाम्रो वंश, हाम्रो पहिचान
-25 October 2026
+भुसाल वंशावली | मुसुका सन्तान
+Website update 4 - 26 October 2026
 
-YOUR EXISTING ADDRESS
-https://bhusal-family.github.io/
-Continue using the same repository and GitHub Pages settings. No domain purchase is needed.
+UPLOAD TO YOUR EXISTING GITHUB WEBSITE
+1. Extract Bhusal-Family-Website-v4.zip.
+2. Open your bhusal-family.github.io repository on GitHub.
+3. Stay in the folder containing the current index.html. Choose Add file >
+   Upload files.
+4. Upload the extracted CONTENTS below. Do not upload the ZIP itself or an
+   enclosing Bhusal-Family folder. Replace the old files with the same names:
 
-UPDATE THE WEBSITE
-1. Download Bhusal-Family-Website-v3.zip and double-click to extract it.
-2. Open your existing bhusal-family.github.io repository on GitHub.
-3. In the Code tab, stay in the folder where your current index.html sits.
-4. Choose Add file > Upload files. Drag in the extracted CONTENTS, not the ZIP
-   and not a surrounding folder. Replace the existing files with the same names.
-5. The required website files are:
    index.html
    styles.css
    app.js
    data.js
-   content.js       (new: news, history topics, shared photo album)
-   community.js     (new: request and news interactions)
-   DESIGN-RESEARCH.html
+   content.js
+   community.js
    UPLOAD-GUIDE.txt
+   .nojekyll
    photos/README.txt
-   .nojekyll        (hidden marker, explained below)
-6. Keep any photographs you already added to the photos folder. This package
-   does not replace or delete those images. Preserve their existing paths.
-7. Enter a message such as “Update family website to version 3” and commit.
-8. Check the repository's Actions tab for the Pages deployment to finish.
-9. Open https://bhusal-family.github.io/ and reload. On a laptop, a hard refresh
-   may be needed (Mac: Command+Shift+R; Windows: Ctrl+Shift+R).
-10. Check Musu's two branches, the list view, a profile's tabs, news and requests
-    on your phone as well as your laptop.
+   documents/Bhusal-Full-Chronicle.pdf
+   documents/chronicle-preview.png
 
-The index.html file must replace the existing index.html at the published root.
-Uploading a containing folder would leave the old website at your usual address.
-Do not upload the Excel register or Tikaram's original attachment as part of this
-website update. Keep your editable master separately.
+5. Upload the documents folder with BOTH files inside it. The website expects
+   the PDF at documents/Bhusal-Full-Chronicle.pdf. Uploading it only at the
+   repository's top level will not make the new tab work.
+6. Keep any existing photos you have added. If you edited photo paths, names or
+   stories on GitHub since the previous edition, keep a copy before replacing
+   data.js or content.js, then reapply those edits.
+7. Enter “Refine family website and add complete PDF” and commit the upload.
+8. Wait for GitHub Pages to finish publishing in the Actions tab.
+9. Open https://bhusal-family.github.io/ and refresh.
+   Mac: Command+Shift+R. Windows: Ctrl+Shift+R.
+10. Check the tree, पूर्ण वंशावली, PDF खोल्नुहोस्, and अनुरोध on phone and laptop.
 
-IF YOU CANNOT SEE .nojekyll
-The ZIP includes it. Finder hides names beginning with a dot. Press
-Command+Shift+Period to show hidden files. Alternatively, in GitHub use Add file
-> Create new file, name it .nojekyll, leave it empty and commit. This marker is
-useful for publishing plain static files. The ordinary HTML/CSS/JS files here do
-not depend on underscore-prefixed folders, so a hidden marker should not prevent
-you from uploading and viewing the demonstration.
+YOUR ADDRESS AND HOSTING DO NOT CHANGE
+Use the same repository and Pages settings. No purchased domain is required.
+
+IF .nojekyll IS HIDDEN
+The ZIP contains this file. In Finder press Command+Shift+Period to show it.
+If your repository already has .nojekyll, leave it there. Otherwise use GitHub's
+Add file > Create new file, name it .nojekyll, and commit it.
+
+THE FULL CHRONICLE PDF
+The पूर्ण वंशावली tab shows a preview and provides Open PDF and Download buttons.
+The PDF contains all current branches from Musu, ten generation columns, spouse
+names, and bookmarks for major branches. Daughters have muted red dotted branch
+lines. Sons have solid green lines; unknown gender uses gray. A neutral trunk
+connects siblings, with each child's final connector showing its own style.
+
+It is ONE large vector page. Open it in the browser's PDF reader or a PDF app,
+then zoom in and scroll. In readers that support bookmarks, choose a named
+branch to jump there. A4 printing will make the names too small; use the file
+digitally for now. The picture on the website is only a preview; use the PDF
+for sharp letters at higher zoom. This PDF is a snapshot, not a live export.
 
 WHAT CHANGED
-- Slim green navigation on laptops; compact bottom navigation on phones.
-- Full-width tree with top-down and sideways directions, generation controls,
-  search, zoom, branch focus and a compact expandable list.
-- On-demand profiles: Family, Details/photo, Sources. No fixed photo sidebar.
-- Latest Excel data: 542 records, including 363 lineage entries and 179 spouses.
-  This total includes unnamed placeholders; it is not a count of verified names.
-- Musu > Hari Prasad and Damodar, with all recorded branches from the main sheet.
-- News/updates, proposed history and culture topics, and a shared-photo area.
-- Per-person requests and a general request section.
-- Phone numbers excluded from website data, excerpts and the new register.
+- Title: भुसाल वंशावली. Subtitle: मुसुका सन्तान.
+- Larger names, bold generation labels and bold child counts.
+- Compact green navigation and controls; larger tree workspace.
+- Daughters use muted red dotted connectors. Sons use solid green connectors.
+- Full-screen tree button; Escape returns to the normal view.
+- New पूर्ण वंशावली tab with the complete PDF.
+- Removed the Source tab, total-record headline and edition footer.
+- Photos open in the person's profile instead of occupying a side panel.
+- News, family requests, search and existing family relationships retained.
+- Click a + spouse name on the tree or list to open that spouse's own profile.
+- Spouse profiles show recorded father information and a mother-name field.
+  Unknown names remain marked as unknown. Use the parent-details request to
+  provide or correct either parent's name, along with supporting information.
 
-HOW FAMILY REQUESTS WORK
-Contact: krish.bhula@gmail.com
-A relative clicks the pen on a person's card or opens अनुरोध. They select a
-request type, give the details and evidence, and prepare the request. The page
-then opens a prepared email; the relative must review and send it. If no email
-app opens, they can copy the text into Gmail or download it and attach it.
-The website does not claim an email was sent and does not maintain an inbox.
-No request becomes a public family-tree change without your review.
+FAMILY INFORMATION AND CORRECTIONS
+The family data remains the current spreadsheet-based version. Unclear names
+and relationships still need family confirmation; ? marks are retained.
+The editable Bhusal-Family-Register-v3.xlsx remains your current master. This
+design update does not require a new workbook. Keep person IDs stable when
+editing. Return the updated workbook when you want both website and PDF rebuilt.
+Editing Excel alone does not update either the website or this PDF.
 
-UPDATING THE EDITABLE REGISTER
-Use the separate Bhusal-Family-Register-v3.xlsx. Its Guide sheet explains the
-People and Sources sheets. Keep existing person IDs unchanged. Correct names,
-life status and relationships, and add evidence in Family corrections.
-Unknown does not mean Living. Deceased adds स्व. to the calculated display name.
-Dates in BS and AD have separate columns. No dates have been invented.
-800 person rows are prepared, with formulas and validation. New generations
-beyond 10 are supported. Extend the prepared table and formula ranges if needed.
-Return the edited workbook when you want the website data regenerated. Editing
-Excel by itself does not update GitHub Pages.
+The website's fatherDetails and motherDetails fields hold additional parent
+information for spouses when those parents are not separately represented in
+the family tree. Existing father details preserve their recorded wording,
+including places where supplied. Mother names have not been guessed.
 
-NAME CORRECTIONS AND OPEN QUESTIONS
-The latest Excel supersedes the earlier photograph transcription. Existing IDs
-were retained where possible so links and photos remain connected. An ID may
-therefore contain an old spelling even when the displayed name is corrected.
-142 records carry a clarification flag. Some refer to unnamed spouses rather
-than an uncertain named ancestor. Check their Sources links before editing.
-Combined entries “सुदन मोनालिसा” (Q180) and “भिम रीता” (O185) remain flagged.
-Kaushila's note mentions a grandson Gurudev, but does not identify the intervening
-parent. The previous photo-only Reshamlal reading is superseded, not asserted as
-a direct child. The first workbook sheet supplies an earlier ancestor note; the
-main interactive tree still starts with Musu.
+Do not upload the original workbook or paper photograph as part of this update.
+Private phone numbers are excluded from this package. Keep future notes,
+stories, photos and PDFs free of phone numbers as well.
 
-ADDING SHARED PHOTOS
-1. Put an approved JPG, PNG or WebP in photos, e.g. musu.jpg.
-2. In data.js, find the exact person by their stable id, e.g. "id": "musu".
-3. Change that person's "photo": "" to "photo": "./photos/musu.jpg".
-4. Upload both data.js and the photo to the same repository.
-Names must match exactly, including upper/lowercase. Use simple filenames.
-“Add photo” inside a profile only previews a photo in that visitor's browser.
-It does not upload a picture or make it visible to other family members.
+REQUESTS AND PHOTOS
+Contact people: Tikaram Bhusal (संयोजक) and Lila Ballav Bhusal (website maintainer). Lila Ballav Bhusal's name
+links to https://ballavbabu.github.io/. Update requests go to
+krish.bhula@gmail.com. A visitor reviews and sends the
+prepared email; the website never sends it automatically. Your review is needed
+before an addition or correction appears publicly.
 
-NEWS, TOPICS AND THE ALBUM
-content.js holds the updates, topics and photographs arrays. Edit text there
-and upload content.js again. Preserve commas and quotation marks; use plain text.
-For an update, supply its date (YYYY-MM-DD), category, title, summary, paragraphs
-and optional personIds/sourceId. Do not describe unverified history as fact.
-For an album photo, follow the commented example in content.js and upload its
-image to photos. The proposed Sheet3 topics are not finished articles.
+“Add photo” in a profile saves a preview only in that visitor's browser. For a
+shared image, add the approved file to photos and set that person's photo field
+in data.js to ./photos/filename.jpg. Keep names and filename capitalization exact.
 
-PRIVACY
-Do not add phone numbers to notes, stories, photographs or data files. The public
-data download and source excerpts are also readable by visitors. Tikaram's
-original attachment and the original paper photograph can contain private numbers;
-keep them outside the public repository. If you previously uploaded either,
-check the repository separately; replacing these website files does not remove
-older uploaded files or Git history.
-
-LOCAL PREVIEW
-Open index.html after extracting the ZIP. The tree works without a build or an
-internet connection. Clipboard and local-photo storage can depend on browser
-settings when opened as a local file. GitHub Pages provides the normal web version.
-
-RESEARCH
-Open DESIGN-RESEARCH.html or use Research & design notes under परिचय. It contains
-the official sources, comparison, implemented choices and practical limitations.
+OLD OPTIONAL FILES
+Older DESIGN-RESEARCH.html or QA preview files are not used by this update.
+They need not be uploaded. The removed Source tab is not linked anywhere.
