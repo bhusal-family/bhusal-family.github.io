@@ -1,11 +1,23 @@
 window.FAMILY_METADATA = {
   "title": "भुसाल वंशावली",
   "subtitle": "मुसुका सन्तान",
-  "version": 4,
+  "version": "4.1",
   "rootId": "musu",
   "maintainerEmail": "krish.bhula@gmail.com",
   "generationCount": 10,
-  "contacts": [{"name":"Lila Ballav Bhusal","role":"Website maintainer","website":"https://ballavbabu.github.io/"},{"name":"Tikaram Bhusal","role":"संयोजक"}]
+  "contacts": [
+    {
+      "name": "Tikaram Bhusal",
+      "nameNe": "टीकाराम भुसाल",
+      "role": "संयोजक"
+    },
+    {
+      "name": "Lila Ballav Bhusal",
+      "nameNe": "लिला बल्लभ भुसाल",
+      "role": "Website maintainer",
+      "website": "https://ballavbabu.github.io/"
+    }
+  ]
 };
 window.FAMILY_DATA = [
   {

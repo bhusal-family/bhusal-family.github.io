@@ -1,102 +1,50 @@
-भुसाल वंशावली | मुसुका सन्तान
-Website update 4 - 26 October 2026
+भुसाल वंशावली - Upload fix 4.1
+26 October 2026
 
-UPLOAD TO YOUR EXISTING GITHUB WEBSITE
-1. Extract Bhusal-Family-Website-v4.zip.
-2. Open your bhusal-family.github.io repository on GitHub.
-3. Stay in the folder containing the current index.html. Choose Add file >
-   Upload files.
-4. Upload the extracted CONTENTS below. Do not upload the ZIP itself or an
-   enclosing Bhusal-Family folder. Replace the old files with the same names:
+WHY THE PDF DID NOT OPEN
+The PDF and preview image were uploaded beside index.html, but the website's
+links expected a documents folder. The old links returned 404. This edition
+uses the files at the top level, exactly as in your current repository.
 
-   index.html
-   styles.css
-   app.js
-   data.js
-   content.js
-   community.js
-   UPLOAD-GUIDE.txt
-   .nojekyll
-   photos/README.txt
-   documents/Bhusal-Full-Chronicle.pdf
-   documents/chronicle-preview.png
+EASIEST UPDATE - SMALL FIX ZIP
+1. Download and extract Bhusal-Website-Fix-v4.1.zip.
+2. Open the bhusal-family.github.io repository, in the same Code folder shown
+   in your screenshot.
+3. Choose Add file > Upload files.
+4. Upload index.html, styles.css, and data.js from the extracted ZIP. Replace
+   the existing files. Do not upload the ZIP or a containing folder.
+5. Commit with a message such as “Fix PDF links and contact order”.
+6. Wait for the GitHub Pages deployment in Actions to finish.
+7. Refresh the website. Mac: Command+Shift+R. Windows: Ctrl+Shift+R.
+8. Click पूर्ण वंशावली, then PDF खोल्नुहोस् or डाउनलोड.
 
-5. Upload the documents folder with BOTH files inside it. The website expects
-   the PDF at documents/Bhusal-Full-Chronicle.pdf. Uploading it only at the
-   repository's top level will not make the new tab work.
-6. Keep any existing photos you have added. If you edited photo paths, names or
-   stories on GitHub since the previous edition, keep a copy before replacing
-   data.js or content.js, then reapply those edits.
-7. Enter “Refine family website and add complete PDF” and commit the upload.
-8. Wait for GitHub Pages to finish publishing in the Actions tab.
-9. Open https://bhusal-family.github.io/ and refresh.
-   Mac: Command+Shift+R. Windows: Ctrl+Shift+R.
-10. Check the tree, पूर्ण वंशावली, PDF खोल्नुहोस्, and अनुरोध on phone and laptop.
+The PDF and chronicle-preview.png are already present at the correct top-level
+location. You do not need to move or upload them again for the small fix.
 
-YOUR ADDRESS AND HOSTING DO NOT CHANGE
-Use the same repository and Pages settings. No purchased domain is required.
+COMPLETE BACKUP PACKAGE
+Bhusal-Family-Website-v4.1.zip contains the complete website, PDF and preview.
+All required files are at one level. If using this ZIP, extract it and upload
+ALL its contents beside index.html. There is no documents folder in this edition.
 
-IF .nojekyll IS HIDDEN
-The ZIP contains this file. In Finder press Command+Shift+Period to show it.
-If your repository already has .nojekyll, leave it there. Otherwise use GitHub's
-Add file > Create new file, name it .nojekyll, and commit it.
+Required contents:
+index.html, styles.css, app.js, data.js, content.js, community.js,
+Bhusal-Full-Chronicle.pdf, chronicle-preview.png, .nojekyll, UPLOAD-GUIDE.txt
 
-THE FULL CHRONICLE PDF
-The पूर्ण वंशावली tab shows a preview and provides Open PDF and Download buttons.
-The PDF contains all current branches from Musu, ten generation columns, spouse
-names, and bookmarks for major branches. Daughters have muted red dotted branch
-lines. Sons have solid green lines; unknown gender uses gray. A neutral trunk
-connects siblings, with each child's final connector showing its own style.
+Keep any photographs already in your photos folder. No family names, parent
+relationships, life statuses, or photograph paths were changed by this fix.
 
-It is ONE large vector page. Open it in the browser's PDF reader or a PDF app,
-then zoom in and scroll. In readers that support bookmarks, choose a named
-branch to jump there. A4 printing will make the names too small; use the file
-digitally for now. The picture on the website is only a preview; use the PDF
-for sharp letters at higher zoom. This PDF is a snapshot, not a live export.
+CONTACT ORDER
+1. संयोजक - Tikaram Bhusal (टीकाराम भुसाल)
+2. वेबसाइट व्यवस्थापक · Maintainer - Lila Ballav Bhusal (लिला बल्लभ भुसाल)
+   Website: https://ballavbabu.github.io/
+Update requests still go to krish.bhula@gmail.com.
 
-WHAT CHANGED
-- Title: भुसाल वंशावली. Subtitle: मुसुका सन्तान.
-- Larger names, bold generation labels and bold child counts.
-- Compact green navigation and controls; larger tree workspace.
-- Daughters use muted red dotted connectors. Sons use solid green connectors.
-- Full-screen tree button; Escape returns to the normal view.
-- New पूर्ण वंशावली tab with the complete PDF.
-- Removed the Source tab, total-record headline and edition footer.
-- Photos open in the person's profile instead of occupying a side panel.
-- News, family requests, search and existing family relationships retained.
-- Click a + spouse name on the tree or list to open that spouse's own profile.
-- Spouse profiles show recorded father information and a mother-name field.
-  Unknown names remain marked as unknown. Use the parent-details request to
-  provide or correct either parent's name, along with supporting information.
+DIRECT PDF ADDRESS
+https://bhusal-family.github.io/Bhusal-Full-Chronicle.pdf
 
-FAMILY INFORMATION AND CORRECTIONS
-The family data remains the current spreadsheet-based version. Unclear names
-and relationships still need family confirmation; ? marks are retained.
-The editable Bhusal-Family-Register-v3.xlsx remains your current master. This
-design update does not require a new workbook. Keep person IDs stable when
-editing. Return the updated workbook when you want both website and PDF rebuilt.
-Editing Excel alone does not update either the website or this PDF.
+The PDF is a single large page. Zoom in for names; its bookmarks jump to major
+branches. The website preview is a picture; the PDF remains sharp at high zoom.
 
-The website's fatherDetails and motherDetails fields hold additional parent
-information for spouses when those parents are not separately represented in
-the family tree. Existing father details preserve their recorded wording,
-including places where supplied. Mother names have not been guessed.
-
-Do not upload the original workbook or paper photograph as part of this update.
-Private phone numbers are excluded from this package. Keep future notes,
-stories, photos and PDFs free of phone numbers as well.
-
-REQUESTS AND PHOTOS
-Contact people: Tikaram Bhusal (संयोजक) and Lila Ballav Bhusal (website maintainer). Lila Ballav Bhusal's name
-links to https://ballavbabu.github.io/. Update requests go to
-krish.bhula@gmail.com. A visitor reviews and sends the
-prepared email; the website never sends it automatically. Your review is needed
-before an addition or correction appears publicly.
-
-“Add photo” in a profile saves a preview only in that visitor's browser. For a
-shared image, add the approved file to photos and set that person's photo field
-in data.js to ./photos/filename.jpg. Keep names and filename capitalization exact.
-
-OLD OPTIONAL FILES
-Older DESIGN-RESEARCH.html or QA preview files are not used by this update.
-They need not be uploaded. The removed Source tab is not linked anywhere.
+.nojekyll is hidden in Finder. Command+Shift+Period shows hidden files.
+If it is already in your repository, keep it. No hosting setting changes or
+domain purchase are needed.
