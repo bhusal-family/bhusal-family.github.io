@@ -2,22 +2,45 @@
   'use strict';
 
   // Pure layout: the same relationships are used in both orientations.
-  function layoutTree({people, rootId, expanded, orientation='vertical'}) {
+  function layoutTree({people, rootId, expanded, orientation='vertical', sizes=new Map()}) {
     const byId=new Map(people.map(p=>[p.id,p])), children=new Map();
     for(const p of people)if(p.lineage&&p.treeParentId){if(!children.has(p.treeParentId))children.set(p.treeParentId,[]);children.get(p.treeParentId).push(p);}
     if(!byId.has(rootId))throw new Error('Unknown branch');
-    const width=264,height=194,gap=24,levelGap=50,pad=24,nodes=[],edges=[];let leaf=0;
-    function visit(id,depth,path){if(path.has(id))throw new Error('Circular tree connection');const p=byId.get(id),n={id,p,depth,x:0,y:0};nodes.push(n);const next=new Set([...path,id]);const shown=expanded.has(id)?children.get(id)||[]:[];let axis;
-      if(shown.length){const positions=shown.map(c=>{const pos=visit(c.id,depth+1,next);edges.push({from:id,to:c.id});return pos;});axis=(positions[0]+positions.at(-1))/2;}
-      else{axis=pad+leaf*(orientation==='vertical'?width+gap:height+gap);leaf++;}
-      if(orientation==='vertical'){n.x=axis;n.y=pad+depth*(height+levelGap);}else{n.x=pad+depth*(width+levelGap);n.y=axis;}
-      return axis;
+    const vertical=orientation==='vertical',gap=18,levelGap=34,pad=18,nodes=[],edges=[],levelSizes=[];
+    // Each subtree reserves its real cross-axis footprint. Taller names and
+    // multiple spouses cannot collide with siblings or the following generation.
+    function visit(id,depth,path){
+      if(path.has(id))throw new Error('Circular tree connection');
+      const p=byId.get(id),size=sizes.get(id)||{width:224,height:112};
+      const n={id,p,depth,x:0,y:0,width:size.width,height:size.height};nodes.push(n);
+      levelSizes[depth]=Math.max(levelSizes[depth]||0,vertical?n.height:n.width);
+      const next=new Set([...path,id]),shown=expanded.has(id)?children.get(id)||[]:[];
+      const branches=shown.map(c=>{edges.push({from:id,to:c.id});return visit(c.id,depth+1,next);});
+      const childrenSpan=branches.reduce((sum,b)=>sum+b.span,0)+Math.max(0,branches.length-1)*gap;
+      return {n,branches,childrenSpan,span:Math.max(vertical?n.width:n.height,childrenSpan)};
     }
-    visit(rootId,0,new Set());
-    return {nodes,edges,width:Math.max(...nodes.map(n=>n.x+width))+pad,height:Math.max(...nodes.map(n=>n.y+height))+pad,cardWidth:width,cardHeight:height,maxDepth:Math.max(...nodes.map(n=>n.depth))};
+    const tree=visit(rootId,0,new Set()),levels=[];
+    levelSizes.forEach((size,i)=>{levels[i]=i?levels[i-1]+levelSizes[i-1]+levelGap:pad;});
+    function place(branch,start){
+      const n=branch.n,cross=start+(branch.span-(vertical?n.width:n.height))/2;
+      n.levelEnd=levels[n.depth]+levelSizes[n.depth];
+      if(vertical){n.x=cross;n.y=levels[n.depth];}else{n.x=levels[n.depth];n.y=cross;}
+      let childStart=start+(branch.span-branch.childrenSpan)/2;
+      for(const child of branch.branches){place(child,childStart);childStart+=child.span+gap;}
+    }
+    place(tree,pad);
+    return {nodes,edges,width:Math.max(...nodes.map(n=>n.x+n.width))+pad,height:Math.max(...nodes.map(n=>n.y+n.height))+pad,maxDepth:levelSizes.length-1};
+  }
+  function edgePath(a,b,orientation){
+    if(orientation==='vertical'){
+      const x1=a.x+a.width/2,y1=a.y+a.height,x2=b.x+b.width/2,y2=b.y,exit=a.levelEnd??y1,m=(exit+y2)/2;
+      return `M${x1} ${y1} L${x1} ${exit} C${x1} ${m},${x2} ${m},${x2} ${y2}`;
+    }
+    const x1=a.x+a.width,y1=a.y+a.height/2,x2=b.x,y2=b.y+b.height/2,exit=a.levelEnd??x1,m=(exit+x2)/2;
+    return `M${x1} ${y1} L${exit} ${y1} C${m} ${y1},${m} ${y2},${x2} ${y2}`;
   }
   const edgeKind=p=>p.gender==='Female'?'female':p.gender==='Male'?'male':'unknown';
-  if(typeof module==='object'&&module.exports){module.exports={layoutTree,edgeKind};return;}
+  if(typeof module==='object'&&module.exports){module.exports={layoutTree,edgeKind,edgePath};return;}
 
   const people=window.FAMILY_DATA||[],metadata=window.FAMILY_METADATA||{},byId=new Map(people.map(p=>[p.id,p]));
   const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
@@ -45,13 +68,36 @@
   function writeRoute(push=false){const q=new URLSearchParams({view,branch:scopeId,mode,layout:orientation,depth:depth==='custom'?'2':depth});if($('#profile-dialog').open)q.set('person',selected);const hash='#'+q.toString();if(location.hash!==hash)history[push?'pushState':'replaceState'](null,'',hash);lastRoute=location.hash;}
   function syncScope(){const p=byId.get(scopeId);$('#branch-title').textContent=scopeId==='musu'?'सम्पूर्ण वंश':p.name+'को शाखा';const select=$('#branch-select');if(![...select.options].some(o=>o.value===scopeId)){const ids=[...branchIds];if(!ids.includes(scopeId))ids.push(scopeId);select.innerHTML=ids.map(id=>`<option value="${esc(id)}">${id==='musu'?'मुसुका सन्तान':esc(byId.get(id).name)}</option>`).join('');}select.value=scopeId;$('#ancestor-path').hidden=pathTo(p).length===1;$('#ancestor-path').innerHTML=pathTo(p).map(q=>`<button data-scope="${q.id}" aria-label="Focus on ${esc(q.english)}">${esc(q.name)}</button>`).join('<span aria-hidden="true">›</span>');$('#orientation').value=orientation;$('#depth').value=depth;$('#tree-count').textContent=`देखाइएको पुस्ता ${p.generation}–${p.generation+layout.maxDepth}`;}
   const spouseLinks=p=>p.spouseIds.map(id=>{const partner=byId.get(id);return `<button class="partner-link" data-person="${id}" aria-label="जीवनसाथी ${esc(displayName(partner))}को विवरण" title="${esc(displayName(partner))}को परिवार र तस्बिर">+ ${esc(displayName(partner))}</button>`;}).join('');
-  function nodeHTML(n){const p=n.p,cc=kids(p.id);return `<article class="person-node gender-${edgeKind(p)} ${p.id===scopeId?'root':''} ${selected===p.id?'selected':''}" style="left:${n.x}px;top:${n.y}px;--tone:${tone(p)}" data-node="${p.id}"><div class="person-body"><button class="person-main" data-person="${p.id}" aria-label="${esc(displayName(p))} · ${p.gender==='Female'?'महिला':p.gender==='Male'?'पुरुष':'लिङ्ग नखुलेको'} · विवरण">${avatar(p)}<span class="node-copy"><strong lang="ne">${esc(displayName(p))}</strong><span class="english">${esc(p.english)}</span></span></button><div class="node-partners">${spouseLinks(p)|| (p.id==='musu'?'<span class="ancestor-label">मूल पुर्खा</span>':'')}</div></div><div class="node-foot"><span class="node-generation">पुस्ता ${p.generation}${p.gender==='Female'?'<span class="node-gender">छोरी</span>':''}${p.review==='Needs clarification'?'<span title="Needs clarification">?</span>':''}</span>${cc.length?`<button class="expand-node" data-expand="${p.id}" aria-expanded="${expanded.has(p.id)}" aria-label="${expanded.has(p.id)?'Collapse':'Expand'} ${esc(p.english)}’s ${cc.length} children"><b aria-hidden="true">${expanded.has(p.id)?'−':'+'}</b><span><strong class="child-count">${cc.length}</strong> सन्तति</span></button>`:'<span class="node-leaf">विवरण ↗</span>'}<button class="request-node" data-request="${p.id}" aria-label="Request an addition or correction for ${esc(p.english)}" title="थप्ने / सच्याउने अनुरोध">${icon('edit')}</button></div></article>`;}
-  function renderTree(){layout=layoutTree({people,rootId:scopeId,expanded,orientation});const pos=new Map(layout.nodes.map(n=>[n.id,n]));const paths=layout.edges.map(e=>{const a=pos.get(e.from),b=pos.get(e.to);let d;if(orientation==='vertical'){const x1=a.x+132,y1=a.y+194,x2=b.x+132,y2=b.y,m=(y1+y2)/2;d=`M${x1} ${y1} C${x1} ${m},${x2} ${m},${x2} ${y2}`;}else{const x1=a.x+264,y1=a.y+97,x2=b.x,y2=b.y+97,m=(x1+x2)/2;d=`M${x1} ${y1} C${m} ${y1},${m} ${y2},${x2} ${y2}`;}return `<path class="connection-${edgeKind(b.p)}" data-child="${b.p.id}" d="${d}"/>`;}).join('');$('#tree-canvas').innerHTML=`<svg class="tree-edges" width="${layout.width}" height="${layout.height}" aria-hidden="true">${paths}</svg>`+layout.nodes.map(nodeHTML).join('');applyZoom();renderOutline();syncScope();}
+  function nodeHTML(n,measure=false){const p=n.p,cc=kids(p.id);return `<article class="person-node gender-${edgeKind(p)} ${p.id===scopeId?'root':''} ${selected===p.id?'selected':''}" style="left:${n.x}px;top:${n.y}px;${measure?'':`width:${n.width}px;height:${n.height}px;`}--tone:${tone(p)}" data-node="${p.id}"><div class="person-body"><button class="person-main" data-person="${p.id}" aria-label="${esc(displayName(p))} · ${p.gender==='Female'?'महिला':p.gender==='Male'?'पुरुष':'लिङ्ग नखुलेको'} · विवरण"><span class="node-copy"><strong lang="ne">${esc(displayName(p))}</strong><span class="english">${esc(p.english)}</span></span></button><div class="node-partners">${spouseLinks(p)|| (p.id==='musu'?'<span class="ancestor-label">मूल पुर्खा</span>':'')}</div></div><div class="node-foot"><span class="node-generation">पुस्ता ${p.generation}${p.gender==='Female'?'<span class="node-gender">छोरी</span>':''}${p.review==='Needs clarification'?'<span title="Needs clarification">?</span>':''}</span>${cc.length?`<button class="expand-node" data-expand="${p.id}" aria-expanded="${expanded.has(p.id)}" aria-label="${expanded.has(p.id)?'Collapse':'Expand'} ${esc(p.english)}’s ${cc.length} children"><b aria-hidden="true">${expanded.has(p.id)?'−':'+'}</b><span><strong class="child-count">${cc.length}</strong> सन्तति</span></button>`:'<span class="node-leaf">विवरण ↗</span>'}<button class="request-node" data-request="${p.id}" aria-label="Request an addition or correction for ${esc(p.english)}" title="थप्ने / सच्याउने अनुरोध">${icon('edit')}</button></div></article>`;}
+  const cardSizeCache=new Map();
+  const cardSizeMode=()=>window.matchMedia('(max-width:700px)').matches?'phone':'desktop';
+  function measureCards(nodes){
+    const prefix=cardSizeMode(),sizes=new Map(),missing=[];
+    for(const n of nodes){const saved=cardSizeCache.get(prefix+':'+n.id);if(saved)sizes.set(n.id,saved);else missing.push(n);}
+    if(missing.length){
+      const probe=document.createElement('div');probe.className='tree-measure';
+      probe.setAttribute('aria-hidden','true');probe.inert=true;
+      probe.innerHTML=missing.map(n=>nodeHTML(n,true)).join('');document.body.append(probe);
+      try{for(const card of probe.children){
+        const rect=card.getBoundingClientRect(),size={width:Math.ceil(rect.width),height:Math.ceil(rect.height)};
+        sizes.set(card.dataset.node,size);cardSizeCache.set(prefix+':'+card.dataset.node,size);
+      }}finally{probe.remove();}
+    }
+    return sizes;
+  }
+  function renderTree(){
+    const visible=layoutTree({people,rootId:scopeId,expanded,orientation});
+    layout=layoutTree({people,rootId:scopeId,expanded,orientation,sizes:measureCards(visible.nodes)});
+    const pos=new Map(layout.nodes.map(n=>[n.id,n]));
+    const paths=layout.edges.map(e=>{const a=pos.get(e.from),b=pos.get(e.to);return `<path class="connection-${edgeKind(b.p)}" data-child="${b.p.id}" d="${edgePath(a,b,orientation)}"/>`;}).join('');
+    $('#tree-canvas').innerHTML=`<svg class="tree-edges" width="${layout.width}" height="${layout.height}" aria-hidden="true">${paths}</svg>`+layout.nodes.map(n=>nodeHTML(n)).join('');
+    applyZoom();renderOutline();syncScope();
+  }
   function applyZoom(){if(!layout)return;const v=$('#tree-viewport'),canvas=$('#tree-canvas'),sizer=$('#tree-sizer');offsetX=Math.max(0,(v.clientWidth-layout.width*zoom)/2);canvas.style.width=layout.width+'px';canvas.style.height=layout.height+'px';canvas.style.transform=`scale(${zoom})`;canvas.style.left=offsetX+'px';sizer.style.width=Math.max(v.clientWidth,layout.width*zoom)+'px';sizer.style.height=Math.max(v.clientHeight,layout.height*zoom)+'px';$('#zoom-reset').textContent=Math.round(zoom*100)+'%';$('#zoom-out').disabled=zoom<=.8;$('#zoom-in').disabled=zoom>=1.6;}
   function setZoom(next){const v=$('#tree-viewport'),ax=v.clientWidth/2,ay=v.clientHeight/2,px=(v.scrollLeft+ax-offsetX)/zoom,py=(v.scrollTop+ay)/zoom;zoom=Math.max(.8,Math.min(1.6,next));applyZoom();v.scrollLeft=px*zoom+offsetX-ax;v.scrollTop=py*zoom-ay;}
-  function centrePerson(id,top=false){if(mode!=='chart')return;const n=layout.nodes.find(p=>p.id===id);if(!n)return;const v=$('#tree-viewport');v.scrollLeft=Math.max(0,(n.x+132)*zoom+offsetX-v.clientWidth/2);v.scrollTop=top?0:Math.max(0,(n.y+97)*zoom-v.clientHeight/2);}
+  function centrePerson(id,top=false){if(mode!=='chart')return;const n=layout.nodes.find(p=>p.id===id);if(!n)return;const v=$('#tree-viewport');v.scrollLeft=Math.max(0,(n.x+n.width/2)*zoom+offsetX-v.clientWidth/2);v.scrollTop=top?0:Math.max(0,(n.y+n.height/2)*zoom-v.clientHeight/2);}
   function renderOutline(){function row(id,d){const p=byId.get(id),cc=kids(id),spouses=p.spouseIds.map(s=>byId.get(s).name).join(' · ');return `<div role="listitem"><div class="outline-row gender-${edgeKind(p)}"><button class="outline-toggle ${cc.length?'':'empty'}" ${cc.length?`data-expand="${id}" aria-expanded="${expanded.has(id)}" aria-label="${expanded.has(id)?'Collapse':'Expand'} ${esc(p.english)}’s children"`:'disabled aria-hidden="true"'}>${cc.length?(expanded.has(id)?'−':'+'):'·'}</button><div class="outline-person-group"><button class="outline-person" data-person="${id}" aria-label="${esc(displayName(p))} · ${p.gender==='Female'?'महिला':p.gender==='Male'?'पुरुष':'लिङ्ग नखुलेको'} · विवरण">${avatar(p)}<span><strong>${esc(displayName(p))}</strong><small>${esc(p.english)}</small></span></button><div class="outline-partners">${spouseLinks(p)}</div></div><span class="outline-meta">पुस्ता ${p.generation}${p.gender==='Female'?'<span class="node-gender">छोरी</span>':''}${p.review==='Needs clarification'?'<small>पुष्टि बाँकी</small>':''}</span></div>${cc.length&&expanded.has(id)?`<div role="list" class="outline-group ${d>=3?'deep':''}">${cc.map(c=>row(c.id,d+1)).join('')}</div>`:''}</div>`;}$('#outline-list').innerHTML=`<div role="list" class="outline-group top-level">${row(scopeId,0)}</div>`;}
-  function toggleBranch(id){if(!kids(id).length)return;const v=$('#tree-viewport'),old=layout.nodes.find(n=>n.id===id),anchor=old?{x:(old.x+132)*zoom+offsetX-v.scrollLeft,y:(old.y+97)*zoom-v.scrollTop}:null;expanded.has(id)?expanded.delete(id):expanded.add(id);depth='custom';renderTree();if(anchor){const n=layout.nodes.find(n=>n.id===id);v.scrollLeft=(n.x+132)*zoom+offsetX-anchor.x;v.scrollTop=(n.y+97)*zoom-anchor.y;}const selector=mode==='chart'?`#tree-canvas [data-expand="${id}"]`:`#outline-list [data-expand="${id}"]`;$(selector)?.focus({preventScroll:true});}
+  function toggleBranch(id){if(!kids(id).length)return;const v=$('#tree-viewport'),old=layout.nodes.find(n=>n.id===id),anchor=old?{x:(old.x+old.width/2)*zoom+offsetX-v.scrollLeft,y:(old.y+old.height/2)*zoom-v.scrollTop}:null;expanded.has(id)?expanded.delete(id):expanded.add(id);depth='custom';renderTree();if(anchor){const n=layout.nodes.find(n=>n.id===id);v.scrollLeft=(n.x+n.width/2)*zoom+offsetX-anchor.x;v.scrollTop=(n.y+n.height/2)*zoom-anchor.y;}const selector=mode==='chart'?`#tree-canvas [data-expand="${id}"]`:`#outline-list [data-expand="${id}"]`;$(selector)?.focus({preventScroll:true});}
   function setMode(next,updateUrl=true){mode=next;$('.zoom-tools').hidden=mode!=='chart';$('#chart-panel').hidden=mode!=='chart';$('#outline-panel').hidden=mode!=='outline';$$('[data-mode]').forEach(b=>{b.setAttribute('aria-selected',String(b.dataset.mode===mode));b.tabIndex=b.dataset.mode===mode?0:-1;});$('.layout-controls').hidden=mode==='outline';if(mode==='chart')applyZoom();if(updateUrl)writeRoute();}
   function setView(next,push=true,updateUrl=true){if(!['tree','chronicle','people','news','requests','about'].includes(next))return;closeProfile(false);view=next;document.body.classList.toggle('tree-active',view==='tree');document.body.classList.toggle('pdf-active',view==='chronicle');if(view!=='tree')setFocus(false);for(const name of ['tree','chronicle','people','news','requests','about'])$('#'+name+'-view').hidden=name!==view;$$('[data-view]').forEach(b=>{const active=b.dataset.view===view;b.classList.toggle('active',active&&b.classList.contains('rail-link'));if(active)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});if(view==='people')renderDirectory();if(view==='tree')applyZoom();hideSearch();if(updateUrl)writeRoute(push);window.scrollTo({top:0,behavior:'instant'});}
   function focusBranch(id,{push=true,highlight=id}={}){if(!byId.has(id))return;const person=primary(byId.get(id));if(!person?.lineage)return;closeProfile(false);scopeId=person.id;selected=highlight;zoom=1;depth=depth==='all'?'2':depth==='custom'?'2':depth;expandDepth();setView('tree',false,false);renderTree();writeRoute(push);centrePerson(scopeId,true);}
@@ -120,6 +166,9 @@
   $('#generation-count').textContent=Math.max(...people.map(p=>p.generation));
   $('#generation-filter').insertAdjacentHTML('beforeend',[...new Set(people.map(p=>p.generation))].sort((a,b)=>a-b).map(g=>`<option value="${g}">पुस्ता ${g}</option>`).join(''));
   const routeChanged=()=>{if(location.hash!==lastRoute)readRoute();};window.addEventListener('popstate',routeChanged);window.addEventListener('hashchange',routeChanged);
-  let lastViewportWidth=0;function resizeTree(){if(view!=='tree'||mode!=='chart')return;const width=viewport.clientWidth;applyZoom();if(width&&lastViewportWidth&&Math.abs(width-lastViewportWidth)>1)centrePerson(scopeId,true);if(width)lastViewportWidth=width;}if(window.ResizeObserver)new ResizeObserver(resizeTree).observe(viewport);else window.addEventListener('resize',resizeTree);
+  let lastViewportWidth=0,lastCardSizeMode=cardSizeMode();function resizeTree(){const nextCardSizeMode=cardSizeMode();if(nextCardSizeMode!==lastCardSizeMode){lastCardSizeMode=nextCardSizeMode;renderTree();}if(view!=='tree'||mode!=='chart')return;const width=viewport.clientWidth;applyZoom();if(width&&lastViewportWidth&&Math.abs(width-lastViewportWidth)>1)centrePerson(scopeId,true);if(width)lastViewportWidth=width;}if(window.ResizeObserver)new ResizeObserver(resizeTree).observe(viewport);else window.addEventListener('resize',resizeTree);
   readRoute();renderDirectory();
+  // Re-measure the actual typeface if the browser finishes loading it later.
+  if(document.fonts){document.fonts.ready.then(()=>{cardSizeCache.clear();renderTree();});}
+
 })();

@@ -62,9 +62,40 @@ body.pdf-active #app-shell{height:100dvh;display:flex;flex-direction:column}body
 /* Keep zoom controls outside the chart so they never cover a person's card. */
 .connection-key{justify-content:space-between;gap:8px;min-height:46px;padding:1px 10px}.key-labels{display:flex;align-items:center;gap:22px;min-width:0}.key-labels>span{display:flex;align-items:center;gap:6px;white-space:nowrap}.connection-key .zoom-tools{position:static;box-shadow:none;flex-shrink:0;border:0;border-left:1px solid var(--line);border-radius:0;background:transparent}.connection-key .zoom-tools button{height:44px}.connection-key .zoom-tools #zoom-reset{min-width:54px}@media(max-width:700px){.connection-key{min-height:46px;padding:0 5px;gap:5px}.key-labels{gap:9px;font-size:11px}.key-labels>span{gap:4px}.key-labels>span:nth-child(3){display:none}.key-labels i{width:17px}.connection-key .zoom-tools button{min-width:40px;height:44px}.connection-key .zoom-tools #zoom-reset{min-width:48px}.connection-key .zoom-tools #fit-tree{min-width:40px}}
 
-.contact-people{display:grid;gap:16px;margin:18px 0}.contact-people>div{padding-left:12px;border-left:3px solid #b4c5a5}.contact-name{display:block;font-size:18px;font-weight:700;line-height:1.5;color:var(--forest)}a.contact-name{text-decoration:underline;text-underline-offset:3px;text-decoration-color:#9cac91}.contact-people>div>span{display:block;font-size:16px;color:var(--muted);margin-top:3px}.contact-email-label{font-size:14px!important;margin-bottom:2px!important}.contact-card{grid-column:1/-1}.contact-card .contact-people{grid-template-columns:1fr 1fr;max-width:700px}@media(max-width:700px){.contact-card .contact-people{grid-template-columns:1fr}.contact-name{font-size:18px}}
+.contact-people{display:grid;gap:16px;margin:18px 0}.contact-people>div{padding-left:12px;border-left:3px solid #b4c5a5}.contact-name{display:block;font-size:18px;font-weight:700;line-height:1.5;color:var(--forest)}a.contact-name{text-decoration:underline;text-underline-offset:3px;text-decoration-color:#9cac91}.contact-people>div>span{display:block;font-size:16px;color:var(--muted);margin-top:3px}.contact-email-label{font-size:14px!important;margin-bottom:2px!important}.contact-card{grid-column:1/-1}.contact-card .contact-people{grid-template-columns:1fr;max-width:700px}@media(max-width:700px){.contact-card .contact-people{grid-template-columns:1fr}.contact-name{font-size:18px}}
 
 .contact-people>div>.contact-role{font-size:12px;font-weight:700;color:#72865f;margin:0 0 4px;line-height:1.6}.contact-people>div>.contact-name{margin-top:0}
 
 /* Contact order: coordinator, then website maintainer. */
-.contact-name .contact-nepali{display:inline;font-size:17px;font-weight:650;color:inherit}.contact-card .contact-people{max-width:960px;grid-template-columns:1fr 1.15fr;gap:24px}@media(max-width:700px){.contact-card .contact-people{grid-template-columns:1fr;gap:18px}.contact-name .contact-nepali{font-size:16px}}
+.contact-name .contact-nepali{display:inline;font-size:17px;font-weight:650;color:inherit}.contact-card .contact-people{max-width:760px;grid-template-columns:1fr;gap:24px}@media(max-width:700px){.contact-card .contact-people{grid-template-columns:1fr;gap:18px}.contact-name .contact-nepali{font-size:16px}}
+
+/* Compact, text-only branch cards. Existing fonts and text sizes are retained. */
+.person-node{
+  width:max-content;min-width:224px;max-width:264px;height:auto;
+}
+.person-body{
+  height:auto;min-height:0;justify-content:flex-start;overflow:visible;
+}
+.person-body .person-main{
+  min-height:0;height:auto;padding:8px 10px 4px;gap:0;align-items:flex-start;
+}
+.node-copy strong{
+  display:block;-webkit-line-clamp:unset;overflow:visible;
+  white-space:normal;overflow-wrap:anywhere;
+}
+.node-copy .english{
+  white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere;
+}
+.node-partners{padding:0 10px 5px;min-width:0}
+.node-partners:empty{display:none}
+.node-partners .partner-link{
+  white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere;
+  width:100%;padding:0;text-align:left;
+}
+.person-node .node-foot{height:45px;min-height:45px;padding-left:8px}
+.person-node .expand-node b{width:16px;flex-shrink:0;text-align:center}
+.tree-measure{
+  position:fixed;left:-10000px;top:0;width:264px;
+  visibility:hidden;pointer-events:none;contain:layout style;
+}
+.tree-measure .person-node{left:0!important;top:0!important}
